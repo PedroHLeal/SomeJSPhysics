@@ -1,29 +1,34 @@
 class SomeJsPhysics {
     field = null;
     fieldElements = [];
-    dt = 0;
+    date = (new Date()).getTime();
+
+    static height = null;
+    static width = null;
 
     constructor(fieldId) {
-        console.log('teste');
         this.field = document.getElementById(fieldId);
-        console.log(this.field);
+
         if (!this.field) {
             throw 'Field was not found';
         }
+
+        SomeJsPhysics.height = this.field.style.height;
+        SomeJsPhysics.width = this.field.style.width;
     }
 
-    run = () => {
+    run = (dt) => {
         for (let element of this.fieldElements) {
-            element.update();
+            element.update(dt);
             element.draw();
         }
     }
 
     start = (fps) => {
-        let date = (new Date()).getTime();
         setInterval(() => {
-            this.run();
-            this.dt = (new Date()).getTime();
+            let dt = (new Date()).getTime() - this.date;
+            this.run(dt/50);
+            this.date = (new Date()).getTime();
         }, 1000/fps);
     }
 

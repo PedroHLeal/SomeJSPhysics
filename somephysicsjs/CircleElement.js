@@ -11,11 +11,20 @@ class CircleElement {
         this.html = this.html.replace(':id', id);
     }
 
-    update = () => {
-        this.velX += this.accX;
-        this.velY += this.accY;
-        this.posX += this.velX;
-        this.posY += this.velY;
+    update = (dt) => {
+        this.velX += this.accX * dt;
+        this.velY += this.accY * dt;
+        this.posX += this.velX * dt;
+        this.posY += this.velY * dt;
+
+        if (this.posY + 100 >= SomeJsPhysics.height.replace('px', '') && this.velY > 0) {
+            this.velY = -this.velY;
+        }
+
+
+        if (this.posX + 100 >= SomeJsPhysics.width.replace('px', '')) {
+            this.velX = -this.velX;
+        }
     }
 
     draw = () => {
