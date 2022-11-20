@@ -28,4 +28,6 @@ class PhysicsElement extends Drawable {
         this.forceX = 0;
         this.forceY = 0;
     }
+
+    draw = () => {}
 }

@@ -1,5 +1,5 @@
 class CircleElement extends PhysicsElement{
-    html = '<div id=":id" style="width: 100px; height: 100px; border-radius: 50px; background-color: white; position: absolute"></div>'
+    html = '<div id=":id" style="width: 50px; height: 50px; border-radius: 25px; background-color: white; position: absolute"></div>'
     domElement = null;
 
     constructor(id) {
@@ -9,7 +9,7 @@ class CircleElement extends PhysicsElement{
     }
 
     draw = () => {
-        this.domElement.style.left = (this.posX - 50).toString();
-        this.domElement.style.top = (this.posY - 50).toString();
+        this.domElement.style.left = (this.posX - 25).toString();
+        this.domElement.style.top = (this.posY - 25).toString();
     }
 }

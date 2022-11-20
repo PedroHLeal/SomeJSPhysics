@@ -26,6 +26,7 @@ class SomeJsPhysics {
         if (this.pause) return;
         this.readKeys();
         for (let element of this.fieldElements) {
+            element.domElement = document.getElementById(element.id);
             element.update(dt);
             element.draw();
         }
@@ -52,11 +53,14 @@ class SomeJsPhysics {
     add = (element) => {
         this.fieldElements.push(element);
         this.field.innerHTML += element.html;
-        element.domElement = document.getElementById(element.id);
     }
 
     remove = (id) => {
         let element = document.getElementById(id);
         this.field.removeChild(element);
+    }
+
+    getElements = () => {
+        return this.fieldElements;
     }
 }
