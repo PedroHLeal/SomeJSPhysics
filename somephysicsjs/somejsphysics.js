@@ -1,7 +1,6 @@
 class SomeJsPhysics {
     field = null;
     fieldElements = [];
-    date = (new Date()).getTime();
     pause = false;
     interval = null;
     running = false;
@@ -34,10 +33,11 @@ class SomeJsPhysics {
 
     start = (fps) => {
         this.running = true;
+        let date = (new Date()).getTime()
         this.interval = setInterval(() => {
-            let dt = (new Date()).getTime() - this.date;
+            let dt = (new Date()).getTime() - date;
             this.run(dt/50);
-            this.date = (new Date()).getTime();
+            date = (new Date()).getTime();
         }, 1000/fps);
     }
 
