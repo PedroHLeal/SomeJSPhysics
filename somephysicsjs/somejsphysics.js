@@ -64,7 +64,6 @@ class SomeJsPhysics {
     add = (element) => {
         this.fieldElements.push(element);
         this.field.innerHTML += element.html;
-        return this.fieldElements.indexOf(element);
     }
 
     remove = (id) => {
