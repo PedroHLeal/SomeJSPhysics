@@ -23,6 +23,7 @@ class SomeJsPhysics {
 
     run = (dt) => {
         if (this.pause) return;
+        const indexesToDestroy = [];
         this.readKeys();
         for (const i in this.fieldElements) {
             const element = this.fieldElements[i];
@@ -32,8 +33,12 @@ class SomeJsPhysics {
 
             if (element.shouldDestroy) {
                 this.remove(element.id);
-                this.fieldElements.splice(i, 1);
+                indexesToDestroy.push(i);
             }
+        }
+        indexesToDestroy.reverse();
+        for (const idx of indexesToDestroy) {
+            this.fieldElements.splice(parseInt(idx), 1);
         }
     }
 
@@ -59,6 +64,7 @@ class SomeJsPhysics {
     add = (element) => {
         this.fieldElements.push(element);
         this.field.innerHTML += element.html;
+        return this.fieldElements.indexOf(element);
     }
 
     remove = (id) => {
@@ -68,5 +74,9 @@ class SomeJsPhysics {
 
     getElements = () => {
         return this.fieldElements;
+    }
+
+    getById = (id) => {
+        return this.fieldElements.find((element) => element.id === id);
     }
 }
