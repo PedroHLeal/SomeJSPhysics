@@ -3,8 +3,9 @@ class PhysicsElement extends Drawable {
     accX = 0; accY = 0;
     posX = 0; posY = 0;
     forceX = 0; forceY = 0;
+    shouldDestroy = false;
 
-    update = (dt) => {
+    update(dt) {
         this.accX = this.forceX * dt;
         this.accY = this.forceY * dt;
 
@@ -28,6 +29,4 @@ class PhysicsElement extends Drawable {
         this.forceX = 0;
         this.forceY = 0;
     }
-
-    draw = () => {}
 }

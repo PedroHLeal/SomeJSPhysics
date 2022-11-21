@@ -24,10 +24,16 @@ class SomeJsPhysics {
     run = (dt) => {
         if (this.pause) return;
         this.readKeys();
-        for (let element of this.fieldElements) {
+        for (const i in this.fieldElements) {
+            const element = this.fieldElements[i];
             element.domElement = document.getElementById(element.id);
             element.update(dt);
             element.draw();
+
+            if (element.shouldDestroy) {
+                this.remove(element.id);
+                this.fieldElements.splice(i, 1);
+            }
         }
     }
 
