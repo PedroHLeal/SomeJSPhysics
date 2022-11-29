@@ -31,12 +31,27 @@ class SomeJsPhysics {
             element.update(dt);
             element.draw();
 
+            if (this.onCollision && element.collider) {
+                for (const colliderElement of this.fieldElements) {
+                    if (colliderElement != element && colliderElement.getBoundingBox && element.getBoundingBox) {
+                        for (const point of colliderElement.getBoundingBox()) {
+                            if (element.collider(element.getBoundingBox(), point)) {
+                                this.onCollision(element, colliderElement);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
             if (element.shouldDestroy) {
                 this.remove(element.id);
                 indexesToDestroy.push(i);
             }
         }
+
         indexesToDestroy.reverse();
+
         for (const idx of indexesToDestroy) {
             this.fieldElements.splice(parseInt(idx), 1);
         }
