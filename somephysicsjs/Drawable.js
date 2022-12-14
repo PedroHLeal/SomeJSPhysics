@@ -1,4 +1,6 @@
 class Drawable {
     id = null;
-    draw = () => {};
+    type = null;
+    parent = null;
+    draw = (camera) => {};
 }

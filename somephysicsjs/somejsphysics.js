@@ -4,6 +4,7 @@ class SomeJsPhysics {
     pause = false;
     interval = null;
     running = false;
+    camera = {x: 0, y: 0};
 
     static height = null;
     static width = null;
@@ -21,15 +22,17 @@ class SomeJsPhysics {
         SomeJsPhysics.width = this.field.style.width;
     }
 
+    postUpdate = () => {}
+
     run = (dt) => {
         if (this.pause) return;
         const indexesToDestroy = [];
-        this.readKeys();
+        this.readKeys(dt);
         for (const i in this.fieldElements) {
             const element = this.fieldElements[i];
             element.domElement = document.getElementById(element.id);
             element.update(dt);
-            element.draw();
+            element.draw(this.camera);
 
             if (this.onCollision && element.collider) {
                 for (const colliderElement of this.fieldElements) {
@@ -55,6 +58,8 @@ class SomeJsPhysics {
         for (const idx of indexesToDestroy) {
             this.fieldElements.splice(parseInt(idx), 1);
         }
+
+        this.postUpdate();
     }
 
     start = (fps) => {
