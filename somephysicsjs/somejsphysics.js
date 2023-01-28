@@ -26,40 +26,16 @@ class SomeJsPhysics {
 
     run = (dt) => {
         if (this.pause) return;
-        const indexesToDestroy = [];
         this.readKeys(dt);
         for (const i in this.fieldElements) {
             const element = this.fieldElements[i];
             element.domElement = document.getElementById(element.id);
             element.update(dt);
-            element.draw(this.camera);
-
-            if (this.onCollision && element.collider) {
-                for (const colliderElement of this.fieldElements) {
-                    if (colliderElement != element && colliderElement.getBoundingBox && element.getBoundingBox) {
-                        for (const point of colliderElement.getBoundingBox()) {
-                            if (element.collider(element.getBoundingBox(), point)) {
-                                this.onCollision(element, colliderElement);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (element.shouldDestroy) {
-                this.remove(element.id);
-                indexesToDestroy.push(i);
+            this.postUpdate(element, i);
+            if (!element.shouldDestroy) {
+                element.draw(this.camera);
             }
         }
-
-        indexesToDestroy.reverse();
-
-        for (const idx of indexesToDestroy) {
-            this.fieldElements.splice(parseInt(idx), 1);
-        }
-
-        this.postUpdate();
     }
 
     start = (fps) => {
