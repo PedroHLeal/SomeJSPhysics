@@ -1,4 +1,4 @@
-class Drawable {
+export default class Drawable {
     id = null;
     type = null;
     parent = null;

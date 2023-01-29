@@ -1,4 +1,5 @@
-class PhysicsElement extends Drawable {
+import Drawable from './Drawable.js'
+export default class PhysicsElement extends Drawable {
     velX = 0; velY = 0;
     accX = 0; accY = 0;
     posX = 0; posY = 0;

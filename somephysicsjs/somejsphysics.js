@@ -1,4 +1,4 @@
-class SomeJsPhysics {
+export default class SomeJsPhysics {
     field = null;
     fieldElements = [];
     pause = false;
