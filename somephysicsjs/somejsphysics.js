@@ -4,7 +4,6 @@ export default class SomeJsPhysics {
     pause = false;
     interval = null;
     running = false;
-    camera = {x: 0, y: 0};
 
     static height = null;
     static width = null;
@@ -22,7 +21,7 @@ export default class SomeJsPhysics {
         SomeJsPhysics.width = this.field.style.width;
     }
 
-    postUpdate = () => {}
+    update = () => {}
 
     run = (dt) => {
         if (this.pause) return;
@@ -30,11 +29,7 @@ export default class SomeJsPhysics {
         for (const i in this.fieldElements) {
             const element = this.fieldElements[i];
             element.domElement = document.getElementById(element.id);
-            element.update(dt);
-            this.postUpdate(element, i);
-            if (!element.shouldDestroy) {
-                element.draw(this.camera);
-            }
+            this.update(element, i, dt);
         }
     }
 
