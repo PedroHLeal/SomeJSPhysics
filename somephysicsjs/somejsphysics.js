@@ -1,72 +1,81 @@
 export default class SomeJsPhysics {
-    field = null;
-    fieldElements = [];
-    pause = false;
-    interval = null;
-    running = false;
+  field = null;
+  fieldElements = [];
+  pause = false;
+  interval = null;
+  running = false;
 
-    static height = null;
-    static width = null;
+  static height = null;
+  static width = null;
 
-    readKeys = () => {};
+  readKeys = () => {};
 
-    constructor(fieldId) {
-        this.field = document.getElementById(fieldId);
+  constructor(fieldId) {
+    this.field = document.getElementById(fieldId);
 
-        if (!this.field) {
-            throw 'Field was not found';
-        }
-
-        SomeJsPhysics.height = this.field.style.height;
-        SomeJsPhysics.width = this.field.style.width;
+    if (!this.field) {
+      throw "Field was not found";
     }
 
-    update = () => {}
+    SomeJsPhysics.height = this.field.style.height;
+    SomeJsPhysics.width = this.field.style.width;
+  }
 
-    run = (dt) => {
-        if (this.pause) return;
-        this.readKeys(dt);
-        for (const i in this.fieldElements) {
-            const element = this.fieldElements[i];
-            element.domElement = document.getElementById(element.id);
-            this.update(element, i, dt);
-        }
-    }
+  update = () => {};
 
-    start = (fps) => {
-        this.running = true;
-        let date = (new Date()).getTime()
-        this.interval = setInterval(() => {
-            let dt = (new Date()).getTime() - date;
-            this.run(dt/50);
-            date = (new Date()).getTime();
-        }, 1000/fps);
+  run = (dt) => {
+    if (this.pause) return;
+    this.readKeys(dt);
+    for (const i in this.fieldElements) {
+      const element = this.fieldElements[i];
+      element.domElement = document.getElementById(element.id);
+      this.update(element, i, dt);
     }
+  };
 
-    stop = () => {
-        this.running = false;
-        clearInterval(this.interval);
-    }
+  start = (fps) => {
+    this.running = true;
+    let date = new Date().getTime();
+    this.interval = setInterval(() => {
+      let dt = new Date().getTime() - date;
+      this.run(dt / 50);
+      date = new Date().getTime();
+    }, 1000 / fps);
+  };
 
-    togglePause = () => {
-        this.pause = !this.pause;
-    }
+  stop = () => {
+    this.running = false;
+    clearInterval(this.interval);
+  };
 
-    add = (element) => {
-        this.fieldElements.push(element);
-        this.field.innerHTML += element.html;
-    }
+  togglePause = () => {
+    this.pause = !this.pause;
+  };
 
-    remove = (id) => {
-        let element = document.getElementById(id);
-        this.field.removeChild(element);
-    }
+  add = (element) => {
+    this.fieldElements.push(element);
+    this.field.innerHTML += element.html;
+  };
 
-    getElements = () => {
-        return this.fieldElements;
-    }
+  remove = (element) => {
+    this.removeFieldElement(element);
+    let domElement = document.getElementById(element.id);
+    this.field.removeChild(domElement);
+  };
 
-    getById = (id) => {
-        return this.fieldElements.find((element) => element.id === id);
-    }
+  getElements = () => {
+    return this.fieldElements;
+  };
+
+  getById = (id) => {
+    return this.fieldElements.find((element) => element.id === id);
+  };
+
+  getElementIndex = (element) => {
+    return this.fieldElements.findIndex((e) => e.id === element.id);
+  } 
+
+  removeFieldElement = (element) => {
+    this.fieldElements.splice(this.getElementIndex(element), 1);
+  };
 }
