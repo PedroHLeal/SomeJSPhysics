@@ -7,6 +7,7 @@ export default class SomeJsPhysics {
 
   static height = null;
   static width = null;
+  previousIntervalIterationCompleted = true;
 
   readKeys = () => {};
 
@@ -37,9 +38,13 @@ export default class SomeJsPhysics {
     this.running = true;
     let date = new Date().getTime();
     this.interval = setInterval(() => {
-      let dt = new Date().getTime() - date;
-      this.run(dt / 50);
-      date = new Date().getTime();
+        if (this.previousIntervalIterationCompleted) {
+            this.previousIntervalIterationCompleted = false;
+            let dt = new Date().getTime() - date;
+            this.run(dt / 50);
+            date = new Date().getTime();
+            this.previousIntervalIterationCompleted = true;
+        }
     }, 1000 / fps);
   };
 
